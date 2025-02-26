@@ -1,7 +1,10 @@
+// jsconfig.json at the project root
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      // This tells Next.js that "@/*" = "./src/*"
+      "@/*": ["src/*"]
     }
   }
 }
