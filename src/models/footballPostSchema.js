@@ -24,4 +24,4 @@ const footballPostSchema = new mongoose.Schema({
 });
 
 
-export default mongoose.models.Post || mongoose.model('FootballPost', footballPostSchema);
+export default mongoose.models.FootballPost || mongoose.model('FootballPost', footballPostSchema);

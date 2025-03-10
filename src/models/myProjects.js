@@ -24,4 +24,4 @@ const myProjectsSchema = new mongoose.Schema({
 });
 
 
-export default mongoose.models.Post || mongoose.model('MyProjects', myProjectsSchema);
+export default mongoose.models.MyProjects || mongoose.model('MyProjects', myProjectsSchema);
