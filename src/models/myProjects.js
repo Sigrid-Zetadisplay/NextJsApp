@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const blogPostSchema = new mongoose.Schema({
+const myProjectsSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -24,4 +24,4 @@ const blogPostSchema = new mongoose.Schema({
 });
 
 
-export default mongoose.models.Post || mongoose.model('BlogPost', blogPostSchema);
+export default mongoose.models.Post || mongoose.model('MyProjects', myProjectsSchema);

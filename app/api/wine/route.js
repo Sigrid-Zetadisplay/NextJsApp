@@ -1,13 +1,13 @@
 
 import { dbConnect } from '@/lib/dbConnect';
-import RedWine from '@/models/redWineSchema';
+import Wine from '@/models/wineSchema';
 
 
 export async function GET(req) {
   try {
     await dbConnect();
     // If connected, this query should succeed
-    const posts = await RedWine.find({}); 
+    const posts = await Wine.find({}); 
     return new Response(JSON.stringify({ success: true, data: posts }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },

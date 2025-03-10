@@ -1,7 +1,7 @@
 
 import mongoose from 'mongoose';
 
-const RedWineSchema = new mongoose.Schema({
+const WineSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -17,4 +17,4 @@ const RedWineSchema = new mongoose.Schema({
 });
 
 
-export default mongoose.models.RedWine || mongoose.model('RedWine', RedWineSchema);
+export default mongoose.models.Wine || mongoose.model('Wine', WineSchema);
