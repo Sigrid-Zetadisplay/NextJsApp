@@ -1,13 +1,12 @@
-
+// /api/blog/route.js
 import { dbConnect } from '@/lib/dbConnect';
 import BlogPost from '@/models/blogPostSchema';
 
-// GET: fetch all posts
 export async function GET() {
   try {
     await dbConnect();
-    const posts = await BlogPost.find({});
-    return new Response(JSON.stringify({ success: true, data: posts }), {
+    const blogPosts = await BlogPost.find({});
+    return new Response(JSON.stringify({ success: true, data: blogPosts }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
@@ -19,14 +18,12 @@ export async function GET() {
   }
 }
 
-// POST: create a new post
 export async function POST(request) {
   try {
     await dbConnect();
-    const body = await request.json(); // parse the JSON body
-
-    const newPost = await BlogPost.create(body);
-    return new Response(JSON.stringify({ success: true, data: newPost }), {
+    const body = await request.json();
+    const newBlogPost = await BlogPost.create(body);
+    return new Response(JSON.stringify({ success: true, data: newBlogPost }), {
       status: 201,
       headers: { 'Content-Type': 'application/json' },
     });
