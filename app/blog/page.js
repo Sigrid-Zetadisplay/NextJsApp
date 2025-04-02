@@ -2,13 +2,23 @@
 
 import { useState } from "react";
 import useCrud from "@/hooks/useCrud";
-import BlogPostForm from "@/components/BlogPostForm"
+import BlogPostForm from "@/components/BlogPostForm";
 
 export default function BlogPage() {
-  const { items: blogPosts, createItem, editItem, deleteItem } = useCrud("/api/blog");
+  const {
+    items: blogPosts,
+    createItem,
+    editItem,
+    deleteItem,
+  } = useCrud("/api/blog");
 
   const [showForm, setShowForm] = useState(false);
-  const [newPost, setNewPost] = useState({ title: "", category: "", content: "", author: "" });
+  const [newPost, setNewPost] = useState({
+    title: "",
+    category: "",
+    content: "",
+    author: "",
+  });
 
   const [editId, setEditId] = useState(null);
   const [editPost, setEditPost] = useState(null);
@@ -33,7 +43,7 @@ export default function BlogPage() {
   };
 
   return (
- <div className="container mx-auto p-8">
+    <div className="container mx-auto p-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Blog Page</h1>
         <button
@@ -66,15 +76,46 @@ export default function BlogPage() {
         />
       )}
 
+      <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+
+
       {blogPosts.length === 0 ? (
         <p>No posts yet.</p>
       ) : (
         blogPosts.map((blogPost) => (
-          <div key={blogPost._id} className="border p-4 mb-4">
-            <h2 className="text-2xl font-semibold">{blogPost.title}</h2>
-            <p className="italic text-sm">Category: {blogPost.category}</p>
-            <p>{blogPost.content}</p>
-            <p className="text-sm mt-1">By {blogPost.author}</p>
+          <div
+            key={blogPost._id}
+            className="flex max-w-xl flex-col items-start justify-between"
+            >
+            <div className="flex items-center gap-x-4 text-xs">
+              <p className="text-gray-500">
+                {new Date(blogPost.createdAt).toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </p>
+              <p className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">
+                {blogPost.category}
+              </p>
+            </div>
+            <div className="group relative">
+              <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
+                <span className="absolute inset-0" />
+                {blogPost.title}
+              </h3>
+              <p className="mt-5 line-clamp-3 text-sm/6 text-gray-600">
+                {blogPost.content}
+              </p>
+            </div>
+            <div className="relative mt-8 flex items-center gap-x-4">
+              <div className="text-sm/6">
+                <p className="font-semibold text-gray-900">
+                  <span className="absolute inset-0" />
+                  By {blogPost.author}
+                </p>
+              </div>
+            </div>
             <div className="mt-2 flex space-x-2">
               <button
                 onClick={() => {
@@ -82,19 +123,20 @@ export default function BlogPage() {
                   setEditPost(blogPost);
                 }}
                 className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded"
-              >
+                >
                 Edit
               </button>
               <button
                 onClick={() => deleteItem(blogPost._id)}
                 className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
-              >
+                >
                 Delete
               </button>
             </div>
           </div>
         ))
       )}
+      </div>
     </div>
   );
 }
