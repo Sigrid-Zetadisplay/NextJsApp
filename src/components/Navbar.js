@@ -1,62 +1,86 @@
 "use client";
 
 import Link from "next/link";
+import Image from 'next/image';
 import { useSession, signOut } from "next-auth/react";
 
 const Navbar = () => {
   const { data: session } = useSession();
 
   return (
-    <nav className="bg-gray-800 text-white">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link href="/" className="text-xl font-bold">
-          MySite
-        </Link>
-        <div className="space-x-4">
-          <Link href="/" className="hover:text-gray-400">
-            Home
-          </Link>
+		<nav className="bg-gray-800 text-white">
+			<div className="container mx-5  py-4 flex justify-between">
+				{/* Left section with profile image + site title */}
+				<div className="flex items-center space-x-3">
+          <div className="">
+            <Image
+              alt="Author profile picture"
+              src="https://i.imghippo.com/files/qF7023Nk.png"
+              width={100}
+              height={100}
+              className="object-cover rounded-full"
+            />
+            
+          </div>
+					<Link
+						href="/"
+						className="text-xl font-bold hover:text-gray-300">
+						Dora The Wine Explorer
+					</Link>
+				</div>
 
-          {/* If user is logged in, show restricted links */}
-          {session && (
-            <>
-              <Link href="/blog" className="hover:text-gray-400">
-                Blog
-              </Link>
-              <Link href="/wine" className="hover:text-gray-400">
-                Wine
-              </Link>
-              <Link href="/football" className="hover:text-gray-400">
-                Football
-              </Link>
-              <Link href="/projects" className="hover:text-gray-400">
-                My Projects
-              </Link>
+				{/* Right nav links */}
+				<div className="space-x-4 flex items-center">
+					<Link
+						href="/"
+						className="hover:text-gray-400">
+						Home
+					</Link>
 
-              {/* If admin, show Admin Dashboard link */}
-              {session.user.role === "admin" && (
-                <Link href="/admin" className="hover:text-gray-400">
-                  Admin Dashboard
-                </Link>
-              )}
+					{session && (
+						<>
+							<Link
+								href="/blog"
+								className="hover:text-gray-400">
+								Blog
+							</Link>
+							<Link
+								href="/wine"
+								className="hover:text-gray-400">
+								Wine
+							</Link>
+							<Link
+								href="/football"
+								className="hover:text-gray-400">
+								Football
+							</Link>
+							<Link
+								href="/projects"
+								className="hover:text-gray-400">
+								My Projects
+							</Link>
 
-              <button onClick={() => signOut()} className="hover:text-gray-400">
-                Logout
-              </button>
-            </>
-          )}
+							{session.user.role === 'admin' && (
+								<Link
+									href="/admin"
+									className="hover:text-gray-400">
+									Admin Dashboard
+								</Link>
+							)}
 
-          {/* If not logged in, maybe show a "Login" link, or do nothing 
-              if you're handling that on the homepage. */}
-          {!session && (
-            <>
-              {/* e.g., <Link href="/login">Login</Link> */}
-            </>
-          )}
-        </div>
-      </div>
-    </nav>
-  );
+							<button
+								onClick={() => signOut()}
+								className="hover:text-gray-400">
+								Logout
+							</button>
+						</>
+					)}
+
+					{!session && <>{/* Optional Login Link */}</>}
+				</div>
+			</div>
+		</nav>
+	);
 };
 
 export default Navbar;

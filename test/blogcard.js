@@ -1,36 +1,56 @@
-<article key={blogPost._id} className="flex max-w-xl flex-col items-start justify-between">
-              <div className="flex items-center gap-x-4 text-xs">
-                <time dateTime={blogPost.date} className="text-gray-500">
-                  {post.date}
-                </time>
-                <a
-                  href={blogPost.category.href}
-                  className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
-                >
-                  {blogPost.category}
-                </a>
-              </div>
+/** @format */
+
+import Image from 'next/image';
+
+export default function CenteredSection({ session }) {
+	if (session) return null;
+
+	return (
+		<section className="flex flex-col items-center justify-center min-h-screen bg-white px-6 py-24 sm:py-32 lg:px-8">
+			<div className="w-full max-w-xs sm:max-w-md">
+				<Image
+					alt="Company logo"
+					src="https://i.imghippo.com/files/qF7023Nk.png"
+					width={700}
+					height={200}
+					className="mx-auto h-auto"
+				/>
+			</div>
+
+			<figure className="mt-12 text-center max-w-2xl">
+				<blockquote className="text-xl sm:text-2xl font-semibold leading-relaxed text-gray-800">
+					<p>
+						“Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo
+						expedita voluptas culpa sapiente alias molestiae. Numquam corrupti
+						in laborum sed rerum et corporis.”
+					</p>
+				</blockquote>
+				<figcaption className="mt-10 flex justify-center">
+					<div className="w-24 h-24">
+						<Image
+							alt="Author profile picture"
+							src="https://i.imghippo.com/files/qF7023Nk.png"
+							width={200}
+							height={200}
+							className="object-cover rounded-full"
+						/>
+					</div>
+				</figcaption>
+			</figure>
+		</section>
+	);
+}
 
 
-              <div className="group relative">
-                <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
-                  <a href={post.href}>
-                    <span className="absolute inset-0" />
-                    {blogPost.title}
-                  </a>
-                </h3>
-                <p className="mt-5 line-clamp-3 text-sm/6 text-gray-600">{post.description}</p>
-              </div>
-
-
-              <div className="relative mt-8 flex items-center gap-x-4">
-                <div className="text-sm/6">
-                  <p className="font-semibold text-gray-900">
-
-                      <span className="absolute inset-0" />
-                      By {blogPost.author}
-                  </p>
-
-                </div>
-              </div>
-            </article>
+        <figcaption className="mt-10 flex flex-col items-center">
+          <div className="w-20 h-20 sm:w-24 sm:h-24">
+            <Image
+              alt="Author profile picture"
+              src="https://i.imghippo.com/files/qF7023Nk.png"
+              width={200}
+              height={200}
+              className="object-cover rounded-full"
+            />
+          </div>
+          <div className="mt-4 text-sm text-gray-600">SigridL— CEO</div>
+        </figcaption>

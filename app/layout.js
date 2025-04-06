@@ -1,6 +1,6 @@
 import "./globals.css";
-import Navbar from "../src/components/Navbar";
-import Footer from "../src/components/Footer";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 import NextAuthSessionProvider from "@/components/SessionProvider";
 
