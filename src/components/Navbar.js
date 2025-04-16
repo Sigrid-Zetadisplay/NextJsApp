@@ -55,7 +55,7 @@ const Navbar = () => {
 								Football
 							</Link>
 							<Link
-								href="/projects"
+								href="/myProjects"
 								className="hover:text-gray-400">
 								My Projects
 							</Link>

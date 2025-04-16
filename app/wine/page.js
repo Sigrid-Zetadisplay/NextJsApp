@@ -103,7 +103,7 @@ export default function WinePage() {
                   </div>
               */}
 							<div className="border-b border-purple-600 pb-4 mb-4 text-center">
-								<p className="text-sm uppercase font-semibold text-slate-500">
+								<p className="text-sm uppercase relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-slate-500 hover:bg-gray-100">
 									{wine.category || 'Uncategorized'}
 								</p>
 								<h2 className="mt-4 text-2xl font-bold text-slate-800">
@@ -113,7 +113,7 @@ export default function WinePage() {
 
 							<div className="flex-1 text-slate-500">
 								<p className="text-sm whitespace-pre-wrap">{wine.content}</p>
-								<p className="text-sm mt-2">By {wine.author || 'Unknown'}</p>
+								<p className="text-sm mt-5 font-semibold text-slate-500">By {wine.author || 'Unknown'}</p>
 							</div>
 
 							{/* Admin-only Edit/Delete actions */}
