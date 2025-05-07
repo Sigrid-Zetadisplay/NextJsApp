@@ -182,7 +182,7 @@ export default function HomePage() {
                     <Image
                       src={
                         post.image ||
-                        "https://i.imghippo.com/files/qF7023Nk.png"
+                        "https://i.imghippo.com/files/cCe8948yAg.png"
                       }
                       alt={post.title || "Post Image"}
                       width={200}

@@ -12,14 +12,14 @@ const Navbar = () => {
 			<div className="container mx-5  py-4 flex justify-between">
 				{/* Left section with profile image + site title */}
 				<div className="flex items-center space-x-3">
-          <div className="">
             <Image
               alt="Author profile picture"
-              src="https://i.imghippo.com/files/qF7023Nk.png"
-              width={100}
+              src="https://i.imghippo.com/files/cCe8948yAg.png"
+              width={90}
               height={100}
-              className="object-cover rounded-full"
+              className="rounded-full"
             />
+          <div className="">
             
           </div>
 					<Link
