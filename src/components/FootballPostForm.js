@@ -1,6 +1,12 @@
 "use client";
 
-export default function FootballPostForm({ mode, formData, onChange, onSubmit, onCancel }) {
+export default function FootballPostForm({
+  mode,
+  formData,
+  onChange,
+  onSubmit,
+  onCancel,
+}) {
   return (
     <form className="mb-6 border p-4" onSubmit={onSubmit}>
       <h2 className="text-xl font-semibold mb-2">
@@ -34,6 +40,21 @@ export default function FootballPostForm({ mode, formData, onChange, onSubmit, o
         required
       />
 
+      <label className="block mb-1">Image URL</label>
+      <input
+        name="image"
+        value={formData.image}
+        onChange={onChange}
+        className="border w-full p-1 mb-2"
+      />
+      {formData.image && (
+        <img
+          src={formData.image}
+          alt="Preview"
+          className="w-32 h-auto mb-2 border"
+        />
+      )}
+
       <label className="block mb-1">Author</label>
       <input
         name="author"
@@ -47,7 +68,9 @@ export default function FootballPostForm({ mode, formData, onChange, onSubmit, o
         <button
           type="submit"
           className={`${
-            mode === "edit" ? "bg-green-500 hover:bg-green-600" : "bg-blue-500 hover:bg-blue-600"
+            mode === "edit"
+              ? "bg-green-500 hover:bg-green-600"
+              : "bg-blue-500 hover:bg-blue-600"
           } text-white px-4 py-2 rounded`}
         >
           {mode === "edit" ? "Save" : "Create Post"}

@@ -23,6 +23,7 @@ export default function WinePage() {
     category: "",
     content: "",
     author: "",
+    image: "",
   });
 
   const [editId, setEditId] = useState(null);
@@ -36,7 +37,7 @@ export default function WinePage() {
   const handleNewSubmit = async (e) => {
     e.preventDefault();
     await createItem(newPost);
-    setNewPost({ title: "", category: "", content: "", author: "" });
+    setNewPost({ title: "", category: "", content: "", image: "", author: "" });
     setShowForm(false);
   };
 
