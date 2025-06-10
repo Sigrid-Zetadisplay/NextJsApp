@@ -172,18 +172,31 @@ export default function HomePage() {
           </h2>
 
           <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-            {Object.entries(posts).map(([key, post]) =>
-              post ? (
+            {Object.entries(posts).map(([key, post]) => {
+              if (!post) {
+                return (
+                  <div
+                    key={key}
+                    className="p-6 bg-white border border-gray-200 rounded-lg text-center text-gray-500"
+                  >
+                    No {key} post available.
+                  </div>
+                );
+              }
+
+              const hasImage = post.image?.trim().startsWith("http");
+              const imageUrl = hasImage
+                ? `/api/image-proxy?url=${encodeURIComponent(post.image)}`
+                : "https://i.imghippo.com/files/cCe8948yAg.png";
+
+              return (
                 <div
                   key={key}
                   className="flex flex-col md:flex-row bg-white shadow-md border border-slate-200 rounded-lg overflow-hidden"
                 >
                   <div className="md:w-2/5 bg-gray-100">
                     <Image
-                      src={
-                        post.image ||
-                        "https://i.imghippo.com/files/cCe8948yAg.png"
-                      }
+                      src={imageUrl}
                       alt={post.title || "Post Image"}
                       width={200}
                       height={100}
@@ -239,15 +252,8 @@ export default function HomePage() {
                     </Link>
                   </div>
                 </div>
-              ) : (
-                <div
-                  key={key}
-                  className="p-6 bg-white border border-gray-200 rounded-lg text-center text-gray-500"
-                >
-                  No {key} post available.
-                </div>
-              )
-            )}
+              );
+            })}
           </div>
         </section>
       )}
