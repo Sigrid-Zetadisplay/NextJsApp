@@ -125,7 +125,7 @@ export default function WinePage() {
               </div>
 
               <div className="flex-1 text-slate-500">
-                <p className="text-sm whitespace-pre-wrap">{wine.content}</p>
+                <p className="text-sm whitespace-pre-wrap wine-content">{wine.content}</p>
                 <p className="text-sm mt-5 font-semibold text-slate-500">
                   By {wine.author || "Unknown"}
                 </p>
