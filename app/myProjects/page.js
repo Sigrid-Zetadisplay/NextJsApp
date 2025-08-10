@@ -1,26 +1,43 @@
+/** @format */
+
 // app/myProjects/page.js
-import { getVinderenBordeauxRedWines } from "@/lib/vinmonopoletAPI";
 
-export default async function MyProjectsPage() {
-  // Fetch wines data on the server
-  const wines = await getVinderenBordeauxRedWines();
+'use client';
 
-  return (
-    <div className="container mx-auto p-8">
-      <h1 className="text-3xl font-bold">Vinderen Bordeaux Red Wines</h1>
-      {wines && wines.length > 0 ? (
-        <ul>
-          {wines.map((wine) => (
-            <li key={wine.productId} className="mb-4 p-4 border rounded-lg shadow-sm">
-              <h2 className="text-2xl font-semibold">{wine.productShortName}</h2>
-              {/* Render additional wine details as needed */}
-              <p className="text-sm mt-1">ID: {wine.productId}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No wines found.</p>
-      )}
-    </div>
-  );
+import { useSession } from 'next-auth/react';
+import { useState } from 'react';
+import useCrud from '@/hooks/useCrud';
+import MyProjectsForm from '@/components/MyProjectsForm';
+
+export default function MyProjectsPage() {
+	const { data: session } = useSession();
+	const [showForm, setShowForm] = useState(false);
+	const { createItem } = useCrud('/api/myProjects');
+
+	return (
+		<div className="container mx-auto p-8">
+			<div className="flex justify-between items-center mb-6">
+				<h1 className="text-3xl font-bold">MyProjects</h1>
+				{session?.user?.role === 'admin' && (
+					<button
+						onClick={() => setShowForm((prev) => !prev)}
+						className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+						{showForm ? 'Cancel' : 'Add New Post'}
+					</button>
+				)}
+			</div>
+			{/* Admin-only add form placeholder */}
+			{showForm && session?.user?.role === 'admin' && (
+				<div className="p-6 bg-white border rounded shadow text-center">
+					<MyProjectsForm
+						onSubmit={async (form) => {
+							await createItem(form);
+							setShowForm(false);
+						}}
+						onCancel={() => setShowForm(false)}
+					/>
+				</div>
+			)}
+		</div>
+	);
 }
