@@ -1,6 +1,3 @@
-/** @format */
-
-// components/HeroHomePage.js
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
@@ -12,26 +9,32 @@ export const HeroSection = ({ session }) => {
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.6 }}
-			className="flex flex-col items-center py-16 bg-white ml-5 ">
-			<div className="w-full max-w-s">
+			className="relative flex items-center justify-center py-20 min-h-[60vh] bg-white overflow-hidden"
+		>
+			{/* Bakgrunnsbilde med next/image */}
+			<div className="absolute inset-0 z-0 opacity-20">
 				<Image
-					alt="Company logo"
-					src="https://i.imghippo.com/files/qF7023Nk.png"
-					width={500}
-					height={200}
-					className="rounded-full"
+					src="https://i.imghippo.com/files/cCe8948yAg.png"
+					alt="Background"
+					fill
+					className="object-cover"
+					sizes="100vw"
+					priority
 				/>
 			</div>
 
-			<figure className="mt-12 text-center max-w-xs px-4 sm:px-0">
-				<blockquote className="font-semibold leading-relaxed text-gray-800">
+			{/* Innhold */}
+			<div className="relative z-10 text-center max-w-2xl px-6">
+				<h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+					Dora The Wine Explorer
+				</h1>
+				<blockquote className="text-lg text-gray-700 font-medium">
 					<p>
-						Dora The Wine Explorer. Welcome to this honest and informative
-						website. Here you will find interesting information about the most
-						important things in life.
+						Welcome to this honest and informative website. Here you will find
+						interesting information about the most important things in life.
 					</p>
 				</blockquote>
-			</figure>
+			</div>
 		</motion.section>
 	);
 };

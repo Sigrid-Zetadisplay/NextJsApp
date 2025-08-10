@@ -1,17 +1,16 @@
 /** @format */
 
-// /app/api/blog/latest/route.js
 import { dbConnect } from '@/lib/dbConnect';
-import BlogPost from '@/models/blogPostSchema';
+import MyProjects from '@/models/myProjects';
 
 export async function GET() {
 	try {
 		await dbConnect();
-		const latestPost = await BlogPost.findOne({}).sort({ createdAt: -1 });
+		const latestPost = await MyProjects.findOne({}).sort({ createdAt: -1 });
 
 		if (!latestPost) {
 			return new Response(
-				JSON.stringify({ success: false, error: 'No blog post found' }),
+				JSON.stringify({ success: false, error: 'No MyProjects post found' }),
 				{
 					status: 404,
 					headers: { 'Content-Type': 'application/json' },

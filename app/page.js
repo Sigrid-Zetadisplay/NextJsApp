@@ -1,11 +1,13 @@
+/** @format */
+
 // app/page.js
-"use client";
-import { useState, useEffect } from "react";
-import { signIn, useSession } from "next-auth/react";
-import Image from "next/image";
+'use client';
+import { useState, useEffect } from 'react';
+import { signIn, useSession } from 'next-auth/react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
-import Link from "next/link";
-import { HeroSection }  from '@/components/HeroHomePage';
+import Link from 'next/link';
+import { HeroSection } from '@/components/HeroHomePage';
 
 export default function HomePage() {
 	const { data: session, status } = useSession();
@@ -25,6 +27,7 @@ export default function HomePage() {
 		wine: null,
 		blog: null,
 		football: null,
+		myProjects: null,
 	});
 
 	const handleLogin = async (e) => {
@@ -68,12 +71,13 @@ export default function HomePage() {
 	useEffect(() => {
 		if (session) {
 			const fetchPosts = async () => {
-				const [wine, blog, football] = await Promise.all([
+				const [wine, blog, football, myProjects] = await Promise.all([
 					fetch('/api/wine/latest').then((res) => res.json()),
 					fetch('/api/blog/latest').then((res) => res.json()),
 					fetch('/api/football/latest').then((res) => res.json()),
+					fetch('/api/myProjects/latest').then((res) => res.json()),
 				]);
-				setPosts({ wine, blog, football });
+				setPosts({ wine, blog, football, myProjects });
 			};
 			fetchPosts();
 		}
@@ -169,21 +173,51 @@ export default function HomePage() {
 						Latest Posts
 					</h2>
 
-					<div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-						{Object.entries(posts).map(([key, post]) =>
-							post ? (
+					<div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
+						{Object.entries(posts).map(([key, post]) => {
+							if (!post) {
+								return (
+									<div
+										key={key}
+										className="p-6 bg-white border border-gray-200 rounded-lg text-center text-gray-500">
+										No {key} post available.
+									</div>
+								);
+							}
+
+							// Prefer post.image, fallback to default
+							const hasImage = post.image && post.image.trim() !== '';
+							const imageUrl = hasImage
+								? post.image.startsWith('http')
+									? `/api/image-proxy?url=${encodeURIComponent(post.image)}`
+									: post.image
+								: 'https://i.imghippo.com/files/cCe8948yAg.png';
+
+							return (
 								<div
 									key={key}
 									className="flex flex-col md:flex-row bg-white shadow-md border border-slate-200 rounded-lg overflow-hidden">
 									<div className="md:w-2/5 bg-gray-100">
-										<img
-											src={post.image || '/default-post.jpg'}
+										<Image
+											src={imageUrl}
 											alt={post.title || 'Post Image'}
+											width={200}
+											height={100}
 											className="h-full w-full object-cover md:rounded-l-lg"
 										/>
 									</div>
 
 									<div className="p-5 flex-1 flex flex-col justify-between">
+										<p className="text-gray-500">
+											{new Date(post.createdAt).toLocaleDateString(
+												'en-GB',
+												{
+													day: 'numeric',
+													month: 'long',
+													year: 'numeric',
+												}
+											)}
+										</p>
 										<div
 											className={`mb-3 w-fit px-3 py-1 rounded-full text-xs font-medium text-white ${
 												key === 'blog'
@@ -192,7 +226,9 @@ export default function HomePage() {
 													? 'bg-purple-600'
 													: key === 'football'
 													? 'bg-red-600'
-													: 'bg-teal-600'
+													: key === 'myProjects'
+													? 'bg-teal-600'
+													: 'bg-gray-600'
 											}`}>
 											{key.toUpperCase()}
 										</div>
@@ -228,14 +264,8 @@ export default function HomePage() {
 										</Link>
 									</div>
 								</div>
-							) : (
-								<div
-									key={key}
-									className="p-6 bg-white border border-gray-200 rounded-lg text-center text-gray-500">
-									No {key} post available.
-								</div>
-							)
-						)}
+							);
+						})}
 					</div>
 				</section>
 			)}
