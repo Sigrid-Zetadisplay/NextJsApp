@@ -20,10 +20,11 @@ export async function GET() {
 
 		return new Response(
 			JSON.stringify({
-				title: latestPost.title,
-				summary: latestPost.summary || latestPost.content?.slice(0, 120),
-				slug: latestPost.slug || latestPost._id,
-				image: latestPost.image || '',
+				   title: latestPost.title,
+				   summary: latestPost.summary || latestPost.content?.slice(0, 120),
+				   slug: latestPost.slug || latestPost._id,
+				   image: latestPost.image || '',
+				   createdAt: latestPost.createdAt,
 			}),
 			{
 				status: 200,
